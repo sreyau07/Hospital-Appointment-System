@@ -1,0 +1,30 @@
+.login-bg{
+    background:white;
+}
+
+.login-card{
+    width:420px;
+    border-radius:20px;
+    background:white;
+}
+
+.login-card input{
+    height:50px;
+    border-radius:10px;
+}
+
+.login-card button{
+    height:50px;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.login-card button:hover{
+    transform:scale(1.02);
+    transition:0.3s;
+}
+
+.login-card span:hover{
+    text-decoration:underline;
+}
