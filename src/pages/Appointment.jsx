@@ -9,7 +9,7 @@ export default function Appointment() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/doctors")
+      .get("https://hospital-appointment-system-4x21.onrender.com0/api/doctors")
       .then((res) => setDoctors(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -29,7 +29,7 @@ export default function Appointment() {
       }
 
       const res = await axios.post(
-        "http://localhost:5000/api/appointments",
+        "https://hospital-appointment-system-4x21.onrender.com0/api/appointments",
         {
           patient: user._id,
           doctor: selectedDoctor,

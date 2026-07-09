@@ -8,7 +8,7 @@ function Notifications() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/notifications/${user._id}`)
+      .get(`https://hospital-appointment-system-4x21.onrender.com0/api/notifications/${user._id}`)
       .then((res) => setNotifications(res.data))
       .catch((err) => console.log(err));
   }, []);

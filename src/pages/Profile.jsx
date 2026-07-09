@@ -12,7 +12,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/users/${user._id}`)
+      .get(`https://hospital-appointment-system-4x21.onrender.com0/api/users/${user._id}`)
       .then((res) => setForm(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -27,7 +27,7 @@ function Profile() {
   const saveProfile = async () => {
     try {
       await axios.put(
-        `http://localhost:5000/api/users/${user._id}`,
+        `https://hospital-appointment-system-4x21.onrender.com0/api/users/${user._id}`,
         form
       );
 

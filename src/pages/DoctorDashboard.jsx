@@ -18,7 +18,7 @@ const saveAvailability = async () => {
     console.log("User:", user);
 
     const res = await axios.put(
-      `http://localhost:5000/api/doctors/${user._id}/availability`,
+      `https://hospital-appointment-system-4x21.onrender.com0/api/doctors/${user._id}/availability`,
       {
         availableDays,
         availableSlots: availableSlots
@@ -42,7 +42,7 @@ const saveAvailability = async () => {
 
   const fetchAppointments = () => {
     axios
-      .get(`http://localhost:5000/api/appointments/doctor/${user._id}`)
+      .get(`https://hospital-appointment-system-4x21.onrender.com0/api/appointments/doctor/${user._id}`)
       .then((res) => setAppointments(res.data))
       .catch((err) => console.log(err));
   };
@@ -54,7 +54,7 @@ const saveAvailability = async () => {
   const updateStatus = async (id, status) => {
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/appointments/${id}`,
+        `https://hospital-appointment-system-4x21.onrender.com0/api/appointments/${id}`,
         { status }
       );
 
@@ -76,7 +76,7 @@ const saveAvailability = async () => {
 
   try {
     await axios.put(
-      `http://localhost:5000/api/doctors/${user._id}/photo`,
+      `https://hospital-appointment-system-4x21.onrender.com0/api/doctors/${user._id}/photo`,
       formData,
       {
         headers: {
@@ -105,7 +105,7 @@ return (
         <img
           src={
             user.photo
-              ? `http://localhost:5000/uploads/${user.photo}`
+              ? `https://hospital-appointment-system-4x21.onrender.com0/uploads/${user.photo}`
               : "https://via.placeholder.com/120"
           }
           alt="Doctor"

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://hospital-appointment-system-4x21.onrender.com0/api",
 });
 
 export default API;

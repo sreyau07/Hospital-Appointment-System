@@ -11,7 +11,7 @@ const [newTime, setNewTime] = useState("");
     const user = JSON.parse(localStorage.getItem("user"));
 
     axios
-      .get(`http://localhost:5000/api/appointments/patient/${user._id}`)
+      .get(`https://hospital-appointment-system-4x21.onrender.com0/api/appointments/patient/${user._id}`)
       .then((res) => setAppointments(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -52,7 +52,7 @@ const cancelAppointment = async (id) => {
 
   try {
     await axios.delete(
-      `http://localhost:5000/api/appointments/${id}`
+      `https://hospital-appointment-system-4x21.onrender.com0/api/appointments/${id}`
     );
 
     alert("Appointment Cancelled Successfully");
@@ -73,7 +73,7 @@ const rescheduleAppointment = async (id) => {
 
   try {
     const res = await axios.put(
-      `http://localhost:5000/api/appointments/reschedule/${id}`,
+      `https://hospital-appointment-system-4x21.onrender.com0/api/appointments/reschedule/${id}`,
       {
         date: newDate,
         time: newTime,
@@ -92,7 +92,7 @@ const payNow = async (appointment) => {
   try {
     // Create Razorpay Order
     const { data } = await axios.post(
-      "http://localhost:5000/api/payment/create-order",
+      "https://hospital-appointment-system-4x21.onrender.com0/api/payment/create-order",
       {
         amount: appointment.doctor?.fees || 500,
       }
@@ -108,7 +108,7 @@ const payNow = async (appointment) => {
       
       handler: async function (response) {
   await axios.put(
-    `http://localhost:5000/api/payment/success/${appointment._id}`,
+    `https://hospital-appointment-system-4x21.onrender.com0/api/payment/success/${appointment._id}`,
     {
       paymentId: response.razorpay_payment_id,
     }

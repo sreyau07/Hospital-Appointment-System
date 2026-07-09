@@ -9,7 +9,7 @@ function Doctors() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/doctors")
+      .get("https://hospital-appointment-system-4x21.onrender.com0/api/doctors")
       .then((res) => setDoctors(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -70,7 +70,7 @@ function Doctors() {
               <img
                 src={
                   doctor.photo
-                    ? `http://localhost:5000/uploads/${doctor.photo}`
+                    ? `https://hospital-appointment-system-4x21.onrender.com0/uploads/${doctor.photo}`
                     : "https://via.placeholder.com/150"
                 }
                 alt="Doctor"

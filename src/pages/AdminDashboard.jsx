@@ -15,8 +15,8 @@ function AdminDashboard() {
 
   const loadData = async () => {
     try {
-      const userRes = await axios.get("http://localhost:5000/api/users");
-      const appRes = await axios.get("http://localhost:5000/api/appointments");
+      const userRes = await axios.get("https://hospital-appointment-system-4x21.onrender.com0/api/users");
+      const appRes = await axios.get("https://hospital-appointment-system-4x21.onrender.com0/api/appointments");
 
       setUsers(userRes.data);
       setAppointments(appRes.data);
@@ -29,7 +29,7 @@ function AdminDashboard() {
     if (!window.confirm("Delete this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/users/${id}`);
+      await axios.delete(`https://hospital-appointment-system-4x21.onrender.com0/api/users/${id}`);
       alert("User deleted successfully");
       loadData();
     } catch (err) {
@@ -42,7 +42,7 @@ function AdminDashboard() {
     if (!window.confirm("Delete this appointment?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/appointments/${id}`);
+      await axios.delete(`https://hospital-appointment-system-4x21.onrender.com0/api/appointments/${id}`);
       alert("Appointment deleted successfully");
       loadData();
     } catch (err) {
