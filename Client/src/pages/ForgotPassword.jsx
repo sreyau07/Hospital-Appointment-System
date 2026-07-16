@@ -1,29 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import axios from "axios";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
-  
-const navigate = useNavigate();
-
+  const navigate = useNavigate();
 const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    const res = await axios.post(
-      "http://localhost:5000/api/auth/forgot-password",
-      { email }
-    );
+    console.log("Sending request...");
 
-    alert(res.data.message);
+    const res = await API.post("/auth/forgot-password", { email });
 
-    navigate("/verify-otp", {
-      state: { email },
-    });
+    console.log("Response:", res.data);
+
+    localStorage.setItem("resetEmail", email);
+
+    navigate("/verify-otp");
 
   } catch (err) {
-    alert(err.response?.data?.message);
+    console.log("Error:", err);
+    console.log("Response:", err.response);
+    alert(err.response?.data?.message || err.message);
   }
 };
   return (
