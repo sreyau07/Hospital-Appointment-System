@@ -88,7 +88,7 @@ function Profile() {
         <img
           src={
             profile.profilePhoto
-              ? `http://localhost:5000/uploads/${profile.profilePhoto}`
+              ? profile.profilePhoto
               : "https://via.placeholder.com/150"
           }
           alt="Profile"
