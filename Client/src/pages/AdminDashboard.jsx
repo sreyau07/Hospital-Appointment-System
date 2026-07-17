@@ -16,7 +16,9 @@ function AdminDashboard() {
 const loadData = async () => {
   try {
     const userRes = await API.get("/admin/users");
-    const appRes = await API.get("/appointments");
+    console.log("Users:", userRes.data);
+    const appRes = await API.get("/appointments/all");
+    console.log("Appointments:", appRes.data);
 
     setUsers(userRes.data);
     setAppointments(appRes.data);
