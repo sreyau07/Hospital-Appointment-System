@@ -2,7 +2,8 @@ const User = require("../models/User");
 const Appointment = require("../models/Appointment");
 const Notification =require("../models/Notification");
 
-
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 
 // Get all doctors
 const getDoctors = async (req, res) => {
@@ -181,17 +182,36 @@ const updateDoctorPhoto = async (req, res) => {
 
     if (!req.file) {
       return res.status(400).json({
-        message: "No image selected",
+        message: "No image uploaded",
       });
     }
 
-    doctor.profilePhoto = req.file.filename;
+    const uploadFromBuffer = () =>
+      new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "hospital-appointment/doctor-photos",
+          },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          }
+        );
+
+        streamifier
+          .createReadStream(req.file.buffer)
+          .pipe(uploadStream);
+      });
+
+    const result = await uploadFromBuffer();
+
+    doctor.profilePhoto = result.secure_url;
 
     await doctor.save();
 
     res.json({
-      message: "Photo uploaded successfully",
-      profilePhoto: doctor.profilePhoto,
+      message: "Doctor photo uploaded successfully",
+      profilePhoto: result.secure_url,
     });
 
   } catch (error) {
@@ -200,7 +220,6 @@ const updateDoctorPhoto = async (req, res) => {
     });
   }
 };
-
 
 module.exports = {
 
