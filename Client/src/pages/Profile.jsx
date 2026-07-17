@@ -87,9 +87,7 @@ function Profile() {
       <div className="text-center mb-4">
         <img
           src={
-            profile.profilePhoto
-              ? profile.profilePhoto
-              : "https://via.placeholder.com/150"
+            profile.profilePhoto || "https://via.placeholder.com/150"
           }
           alt="Profile"
           className="rounded-circle border"

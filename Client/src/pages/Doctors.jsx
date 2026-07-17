@@ -70,7 +70,7 @@ function Doctors() {
               <img
                 src={
                   doctor.profilePhoto
-                    ? `https://hospital-appointment-system-1-1euy.onrender.com/uploads/${doctor.profilePhoto}`
+                    ? doctor.profilePhoto
                     : "https://via.placeholder.com/150"
                 }
                 alt="Doctor"
