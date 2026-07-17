@@ -1,6 +1,7 @@
 const User = require("../models/User");
 
-
+const cloudinary = require("../config/cloudinary");
+const streamifier = require("streamifier");
 
 // Get Profile
 const getProfile = async (req, res) => {
@@ -104,7 +105,6 @@ const updateProfile = async(req,res)=>{
 
 const updateProfilePhoto = async (req, res) => {
   try {
-
     const user = await User.findById(req.user.id);
 
     if (!user) {
@@ -119,13 +119,30 @@ const updateProfilePhoto = async (req, res) => {
       });
     }
 
-    user.profilePhoto = req.file.filename;
+    const uploadFromBuffer = () =>
+      new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "hospital-appointment/profile-photos",
+          },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          }
+        );
+
+        streamifier.createReadStream(req.file.buffer).pipe(uploadStream);
+      });
+
+    const result = await uploadFromBuffer();
+
+    user.profilePhoto = result.secure_url;
 
     await user.save();
 
     res.json({
       message: "Profile photo uploaded successfully",
-      profilePhoto: user.profilePhoto,
+      profilePhoto: result.secure_url,
     });
 
   } catch (error) {
@@ -134,7 +151,6 @@ const updateProfilePhoto = async (req, res) => {
     });
   }
 };
-
 
 
 module.exports = {
