@@ -1,5 +1,6 @@
+
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 export default function Appointment() {
   const [doctors, setDoctors] = useState([]);
@@ -8,8 +9,8 @@ export default function Appointment() {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/doctors")
+    API
+      .get("/doctors")
       .then((res) => setDoctors(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -28,8 +29,8 @@ export default function Appointment() {
         return;
       }
 
-      const res = await axios.post(
-        "http://localhost:5000/api/appointments",
+      const res = await API.post(
+        "/appointments",
         {
           patient: user._id,
           doctor: selectedDoctor,

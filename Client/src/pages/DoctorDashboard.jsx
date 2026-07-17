@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 function DoctorDashboard() {
   const [appointments, setAppointments] = useState([]);
@@ -18,8 +18,8 @@ const saveAvailability = async () => {
   try {
     const token = localStorage.getItem("token");
 
-    await axios.put(
-      "http://localhost:5000/api/doctors/availability",
+    await API.put(
+      "/doctors/availability",
       {
         availableDays,
         availableSlots: availableSlots
@@ -48,8 +48,8 @@ const fetchAppointments = async () => {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await axios.get(
-      "http://localhost:5000/api/doctors/appointments",
+    const res = await API.get(
+      "/doctors/appointments",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -73,8 +73,8 @@ const updateStatus = async (id, status) => {
 
     const token = localStorage.getItem("token");
 
-    await axios.put(
-      `http://localhost:5000/api/doctors/appointment/${id}`,
+    await API.put(
+      `/doctors/appointment/${id}`,
       { status },
       {
         headers: {
@@ -101,8 +101,8 @@ const uploadPhoto = async () => {
   formData.append("profilePhoto", photo);
 
   try {
-    const res = await axios.put(
-      `http://localhost:5000/api/doctors/${user._id}/photo`,
+    const res = await API.put(
+      `/doctors/${user._id}/photo`,
       formData,
       {
         headers: {
@@ -145,7 +145,7 @@ return (
         <img
           src={
             user.profilePhoto
-              ? `http://localhost:5000/uploads/${user.profilePhoto}`
+              ? user.profilePhoto
               : "https://via.placeholder.com/120"
           }
           alt="Doctor"
@@ -352,7 +352,7 @@ return (
                       </button>
                     </>
 
-                  ) : app.status === "Approved" ? (
+                  ) : app.status === "approved" ? (
 
                     <button
                       className="btn btn-primary btn-sm"

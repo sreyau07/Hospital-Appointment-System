@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 
 function Notifications() {
   const [notifications, setNotifications] = useState([]);
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
   useEffect(() => {
-  axios
-    .get("http://localhost:5000/api/notifications", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-    .then((res) => setNotifications(res.data))
-    .catch((err) => console.log(err));
-}, []);
+    API.get("/notifications")
+      .then((res) => setNotifications(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="container mt-4">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 import jsPDF from "jspdf";
 
 export default function MyAppointments() {
@@ -15,8 +15,8 @@ export default function MyAppointments() {
 
   const fetchAppointments = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:5000/api/appointments/my",
+      const res = await API.get(
+        "/appointments/my",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -76,8 +76,8 @@ export default function MyAppointments() {
     if (!window.confirm("Cancel Appointment?")) return;
 
     try {
-      await axios.put(
-        `http://localhost:5000/api/appointments/cancel/${id}`,
+      await API.put(
+        `/appointments/cancel/${id}`,
         {},
         {
           headers: {
@@ -106,8 +106,8 @@ export default function MyAppointments() {
     }
 
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/appointments/reschedule/${id}`,
+      const res = await API.put(
+        `/appointments/reschedule/${id}`,
         {
           appointmentDate: newDate,
           appointmentTime: newTime,
@@ -137,8 +137,8 @@ export default function MyAppointments() {
 
   const payNow = async (appointment) => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/payment/create-order",
+      const { data } = await API.post(
+        "/payment/create-order",
         {
           amount: appointment.doctor?.fees || 500,
         },
@@ -164,8 +164,8 @@ export default function MyAppointments() {
 
         handler: async function (response) {
 
-          await axios.put(
-            `http://localhost:5000/api/payment/success/${appointment._id}`,
+          await API.put(
+            `/payment/success/${appointment._id}`,
             {
               paymentId:
                 response.razorpay_payment_id,
