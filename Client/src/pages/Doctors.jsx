@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
+import API from "../services/api";
 
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
@@ -8,8 +8,8 @@ function Doctors() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/doctors")
+    API
+      .get("/doctors")
       .then((res) => setDoctors(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -70,7 +70,7 @@ function Doctors() {
               <img
                 src={
                   doctor.profilePhoto
-                    ? `http://localhost:5000/uploads/${doctor.profilePhoto}`
+                    ? `https://hospital-appointment-system-1-1euy.onrender.com/uploads/${doctor.profilePhoto}`
                     : "https://via.placeholder.com/150"
                 }
                 alt="Doctor"
