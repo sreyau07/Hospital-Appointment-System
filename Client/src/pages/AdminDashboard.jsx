@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 import DashboardCard from "../components/DashboardCard";
 import AdminSidebar from "../components/AdminSidebar";
 import AdminCharts from "../components/AdminCharts";
@@ -13,43 +13,26 @@ function AdminDashboard() {
     loadData();
   }, []);
 
- const loadData = async () => {
+const loadData = async () => {
   try {
-    const token = localStorage.getItem("token");
-
-    const userRes = await axios.get(
-      "http://localhost:5000/api/admin/users",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const appRes = await axios.get(
-      "http://localhost:5000/api/appointments/all",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const userRes = await API.get("/admin/users");
+    const appRes = await API.get("/appointments");
 
     setUsers(userRes.data);
     setAppointments(appRes.data);
-
   } catch (err) {
     console.log(err);
   }
 };
+    
   const deleteUser = async (id) => {
   if (!window.confirm("Delete this user?")) return;
 
   try {
     const token = localStorage.getItem("token");
 
-    await axios.delete(
-      `http://localhost:5000/api/admin/users/${id}`,
+    await API.delete(
+      `/admin/users/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -72,8 +55,8 @@ const deleteAppointment = async (id) => {
   try {
     const token = localStorage.getItem("token");
 
-    await axios.delete(
-      `http://localhost:5000/api/appointments/${id}`,
+    await API.delete(
+      `/appointments/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
