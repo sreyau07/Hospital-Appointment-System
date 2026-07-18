@@ -173,6 +173,13 @@ const updateAvailability = async (req, res) => {
 const updateDoctorPhoto = async (req, res) => {
   try {
     const doctor = await User.findById(req.user.id);
+    console.log("===== Doctor Upload =====");
+console.log("Cloud:", process.env.CLOUDINARY_CLOUD_NAME);
+console.log("Key:", process.env.CLOUDINARY_API_KEY);
+console.log(
+  "Secret Loaded:",
+  process.env.CLOUDINARY_API_SECRET ? "YES" : "NO"
+);
 
     if (!doctor) {
       return res.status(404).json({
