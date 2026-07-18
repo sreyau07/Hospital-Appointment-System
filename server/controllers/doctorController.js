@@ -173,13 +173,6 @@ const updateAvailability = async (req, res) => {
 const updateDoctorPhoto = async (req, res) => {
   try {
     const doctor = await User.findById(req.user.id);
-    console.log("===== Doctor Upload =====");
-console.log("Cloud:", process.env.CLOUDINARY_CLOUD_NAME);
-console.log("Key:", process.env.CLOUDINARY_API_KEY);
-console.log(
-  "Secret Loaded:",
-  process.env.CLOUDINARY_API_SECRET ? "YES" : "NO"
-);
 
     if (!doctor) {
       return res.status(404).json({
@@ -192,6 +185,48 @@ console.log(
         message: "No image uploaded",
       });
     }
+
+    // Add these lines here
+    console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME);
+    console.log("API Key:", process.env.CLOUDINARY_API_KEY);
+    console.log("Secret Length:", process.env.CLOUDINARY_API_SECRET.length);
+
+    const uploadFromBuffer = () =>
+      new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "hospital-appointment/doctor-photos",
+          },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          }
+        );
+
+        streamifier
+          .createReadStream(req.file.buffer)
+          .pipe(uploadStream);
+      });
+
+    const result = await uploadFromBuffer();
+
+    doctor.profilePhoto = result.secure_url;
+
+    await doctor.save();
+
+    res.json({
+      message: "Doctor photo uploaded successfully",
+      profilePhoto: result.secure_url,
+    });
+
+  } catch (error) {
+    console.error("Cloudinary Error:", error);
+
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 
     const uploadFromBuffer = () =>
       new Promise((resolve, reject) => {
