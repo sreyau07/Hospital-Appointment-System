@@ -1,66 +1,43 @@
 const User = require("../models/User");
 const Appointment = require("../models/Appointment");
-const Notification =require("../models/Notification");
+const Notification = require("../models/Notification");
 
 const cloudinary = require("../config/cloudinary");
 const streamifier = require("streamifier");
 
 // Get all doctors
 const getDoctors = async (req, res) => {
-
   try {
-
     const doctors = await User.find({
-      role: "doctor"
+      role: "doctor",
     }).select("-password");
 
-
     res.json(doctors);
-
-
   } catch (error) {
-
     res.status(500).json({
-      message: error.message
+      message: error.message,
     });
-
   }
-
 };
-
-
-
 
 // Get doctor appointments
 const getDoctorAppointments = async (req, res) => {
-
   try {
-
-    const appointments =
-      await Appointment.find({
-        doctor: req.user.id
-      })
-      .populate(
-        "patient",
-        "name email phone"
-      )
-      .sort({createdAt: -1});
-
+    const appointments = await Appointment.find({
+      doctor: req.user.id,
+    })
+      .populate("patient", "name email phone")
+      .sort({ createdAt: -1 });
 
     res.json(appointments);
-
-
-  } catch(error) {
-
+  } catch (error) {
     res.status(500).json({
-      message:error.message
+      message: error.message,
     });
-
   }
-
 };
 
-
+// Update appointment status
 const updateAppointmentStatus = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
@@ -84,7 +61,6 @@ const updateAppointmentStatus = async (req, res) => {
       message: `Appointment ${req.body.status} successfully`,
       appointment,
     });
-
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -92,58 +68,35 @@ const updateAppointmentStatus = async (req, res) => {
   }
 };
 
+// Add prescription
+const addPrescription = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(
+      req.params.appointmentId
+    );
 
-
-
-// Add Prescription
-const addPrescription = async(req,res)=>{
-
-  try{
-
-    const appointment =
-      await Appointment.findById(
-        req.params.appointmentId
-      );
-
-
-    if(!appointment){
-
+    if (!appointment) {
       return res.status(404).json({
-        message:"Appointment not found"
+        message: "Appointment not found",
       });
-
     }
 
-
-    appointment.prescription =
-      req.body.prescription;
-
+    appointment.prescription = req.body.prescription;
 
     await appointment.save();
 
-
-
     res.json({
-
-      message:"Prescription added successfully",
-
-      appointment
-
+      message: "Prescription added successfully",
+      appointment,
     });
-
-
-
-  }catch(error){
-
+  } catch (error) {
     res.status(500).json({
-      message:error.message
+      message: error.message,
     });
-
   }
-
 };
 
-
+// Update doctor availability
 const updateAvailability = async (req, res) => {
   try {
     const doctor = await User.findById(req.user.id);
@@ -163,13 +116,14 @@ const updateAvailability = async (req, res) => {
       message: "Availability updated successfully",
       doctor,
     });
-
   } catch (error) {
     res.status(500).json({
       message: error.message,
     });
   }
 };
+
+// Upload doctor photo to Cloudinary
 const updateDoctorPhoto = async (req, res) => {
   try {
     const doctor = await User.findById(req.user.id);
@@ -186,10 +140,12 @@ const updateDoctorPhoto = async (req, res) => {
       });
     }
 
-    // Add these lines here
     console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME);
     console.log("API Key:", process.env.CLOUDINARY_API_KEY);
-    console.log("Secret Length:", process.env.CLOUDINARY_API_SECRET.length);
+    console.log(
+      "Secret Length:",
+      process.env.CLOUDINARY_API_SECRET.length
+    );
 
     const uploadFromBuffer = () =>
       new Promise((resolve, reject) => {
@@ -218,7 +174,6 @@ const updateDoctorPhoto = async (req, res) => {
       message: "Doctor photo uploaded successfully",
       profilePhoto: result.secure_url,
     });
-
   } catch (error) {
     console.error("Cloudinary Error:", error);
 
@@ -228,48 +183,11 @@ const updateDoctorPhoto = async (req, res) => {
   }
 };
 
-    const uploadFromBuffer = () =>
-      new Promise((resolve, reject) => {
-        const uploadStream = cloudinary.uploader.upload_stream(
-          {
-            folder: "hospital-appointment/doctor-photos",
-          },
-          (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          }
-        );
-
-        streamifier
-          .createReadStream(req.file.buffer)
-          .pipe(uploadStream);
-      });
-
-    const result = await uploadFromBuffer();
-
-    doctor.profilePhoto = result.secure_url;
-
-    await doctor.save();
-
-    res.json({
-      message: "Doctor photo uploaded successfully",
-      profilePhoto: result.secure_url,
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-};
-
 module.exports = {
-
   getDoctors,
   getDoctorAppointments,
   updateAppointmentStatus,
   addPrescription,
   updateAvailability,
   updateDoctorPhoto,
-
 };
