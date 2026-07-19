@@ -40,6 +40,23 @@ function AdminSidebar() {
         </Link>
 
       </div>
+
+      <style>
+        {`
+          .flex-shrink-0 {
+            width: 260px;
+            min-height: 100vh;
+          }
+
+          @media (max-width: 991px) {
+            .flex-shrink-0 {
+              width: 100%;
+              min-height: auto;
+            }
+          }
+        `}
+      </style>
+
     </div>
   );
 }
