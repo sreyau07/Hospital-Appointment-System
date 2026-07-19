@@ -15,9 +15,16 @@ connectDB();
 
 const app = express();
 
+const cors = require("cors");
 
-// Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://hospital-appointment-system-wcom.vercel.app"
+  ],
+  credentials: true
+}));
+
 
 app.use(express.json());
 
