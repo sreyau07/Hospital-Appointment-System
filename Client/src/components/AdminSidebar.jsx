@@ -2,17 +2,17 @@ import { Link } from "react-router-dom";
 
 function AdminSidebar() {
   return (
-    <div
-      className="w-100 w-md-auto"
-      style={{
-        width: window.innerWidth < 768 ? "100%" : "260px",
-        minHeight: window.innerWidth < 768 ? "auto" : "100vh",
-        background: "linear-gradient(180deg,#0d6efd,#4f8cff)",
-        color: "white",
-        padding: "20px",
-        boxShadow: "3px 0 10px rgba(0,0,0,0.2)",
-      }}
-    >
+  <div
+  className="flex-shrink-0"
+  style={{
+    width: "260px",
+    minHeight: "100vh",
+    background: "linear-gradient(180deg,#0d6efd,#4f8cff)",
+    color: "white",
+    padding: "20px",
+    boxShadow: "3px 0 10px rgba(0,0,0,0.2)",
+  }}
+>
       <h2
         className="text-center fw-bold mb-4"
       >

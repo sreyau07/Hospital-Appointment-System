@@ -76,9 +76,9 @@ function AdminDashboard() {
 
         {/* Dashboard Cards */}
 
-        <div className="row g-3">
+        <div className="row g-3 justify-content-center">
 
-          <div className="col-12 col-sm-6 col-lg-4">
+          <div className="col-12 col-md-6 col-xl-4 mb-3">
             <DashboardCard
               title="Doctors"
               value={doctors.length}
@@ -86,7 +86,7 @@ function AdminDashboard() {
             />
           </div>
 
-          <div className="col-12 col-sm-6 col-lg-4">
+          <div className="col-12 col-md-6 col-xl-4 mb-3">
             <DashboardCard
               title="Patients"
               value={patients.length}
@@ -94,7 +94,7 @@ function AdminDashboard() {
             />
           </div>
 
-          <div className="col-12 col-sm-6 col-lg-4">
+          <div className="col-12 col-md-6 col-xl-4 mb-3">
             <DashboardCard
               title="Appointments"
               value={appointments.length}

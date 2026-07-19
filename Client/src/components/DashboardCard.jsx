@@ -5,6 +5,7 @@ function DashboardCard({ title, value, color }) {
       style={{
         borderRadius: "20px",
         overflow: "hidden",
+         minHeight: "180px",
       }}
     >
       <div
