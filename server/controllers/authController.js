@@ -166,6 +166,8 @@ user: {
 
 const forgotPassword = async (req, res) => {
   try {
+      console.log("FORGOT PASSWORD API CALLED");
+    console.log(req.body);
     const { email } = req.body;
 
     const user = await User.findOne({ email });
