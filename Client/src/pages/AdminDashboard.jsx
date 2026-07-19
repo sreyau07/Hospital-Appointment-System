@@ -57,7 +57,7 @@ function AdminDashboard() {
 
   return (
     <div
-      className="d-flex flex-column flex-md-row bg-light"
+      className="d-flex flex-column flex-lg-row bg-light"
       style={{ minHeight: "100vh" }}
     >
       <AdminSidebar />
