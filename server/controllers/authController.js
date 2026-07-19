@@ -75,30 +75,33 @@ const login = async (req, res) => {
 
   try {
 
+    console.log("===== LOGIN API CALLED =====");
+    console.log(req.body);
+
     const {
       email,
       password
     } = req.body;
 
-
     const user = await User.findOne({
       email
     });
 
+    console.log("User found:", user);
 
     if (!user) {
-
       return res.status(400).json({
         message: "Invalid credentials"
       });
-
     }
-
 
     const match = await bcrypt.compare(
       password,
       user.password
     );
+
+    console.log("Password Match:", match);
+
 
 
     if (!match) {
