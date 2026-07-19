@@ -1,38 +1,22 @@
+cd
 
+const { Resend } = require("resend");
 
-const nodemailer = require("nodemailer");
-const dns = require("dns");
-
-dns.setDefaultResultOrder("ipv4first");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (to, subject, text) => {
 
-  console.log("Creating transporter...");
   console.log("Sending email to:", to);
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    family: 4,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
+  const result = await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: to,
+    subject: subject,
+    text: text,
   });
 
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to,
-    subject,
-    text
-  });
-
-
-  console.log("Email sent successfully");
+  console.log("Email sent:", result);
 
 };
-
 
 module.exports = sendEmail;
