@@ -17,6 +17,8 @@ const sendEmail = async (to, subject, text) => {
   });
 
 
+  await transporter.verify();
+
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to,
@@ -25,7 +27,6 @@ const sendEmail = async (to, subject, text) => {
   });
 
   console.log("Email sent successfully");
-
 };
 
 
