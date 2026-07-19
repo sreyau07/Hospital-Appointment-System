@@ -1,4 +1,4 @@
-cd
+
 
 const { Resend } = require("resend");
 
