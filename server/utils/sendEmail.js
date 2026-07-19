@@ -1,4 +1,9 @@
+
+
 const nodemailer = require("nodemailer");
+const dns = require("dns");
+
+dns.setDefaultResultOrder("ipv4first");
 
 const sendEmail = async (to, subject, text) => {
 
@@ -17,8 +22,6 @@ const sendEmail = async (to, subject, text) => {
   });
 
 
-  await transporter.verify();
-
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to,
@@ -26,7 +29,9 @@ const sendEmail = async (to, subject, text) => {
     text
   });
 
+
   console.log("Email sent successfully");
+
 };
 
 
