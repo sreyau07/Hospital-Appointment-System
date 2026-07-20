@@ -10,44 +10,42 @@ function Home() {
     
       <div className={darkMode ? "dark-theme" : "light-theme"}>
       <div
-        className="d-flex align-items-center justify-content-center text-center"
-        style={{
-          minHeight: "90vh",
-          background: darkMode ?
-            "linear-gradient(135deg,#1a1a1a,#333)" : "linear-gradient(135deg,white,grey)",
-        }}
+  className="w-100 d-flex align-items-center text-center"
+  style={{
+    minHeight: "90vh",
+    width: "100%",
+    background: darkMode
+      ? "linear-gradient(135deg,#1a1a1a,#333)"
+      : "linear-gradient(135deg,#ffffff,#d9d9d9)",
+  }}
+>
+  <div className="container">
+    <h1 className="display-3 fw-bold text-white">
+      Hospital Appointment System
+    </h1>
+
+    <p className="lead text-white mt-3">
+      Book appointments with experienced doctors quickly,
+      securely, and easily.
+    </p>
+
+    <div className="mt-4">
+      <Link
+        to="/register"
+        className="btn btn-warning btn-lg me-3"
       >
-        <div className="container">
+        Get Started
+      </Link>
 
-          <h1
-            className="display-3 fw-bold text-white"
-          >
-            Hospital Appointment System
-          </h1>
-
-          <p className="lead text-white mt-3">
-            Book appointments with experienced doctors
-            quickly, securely, and easily.
-          </p>
-
-          <div className="mt-4">
-            <Link
-              to="/register"
-              className="btn btn-warning btn-lg me-3"
-            >
-              Get Started
-            </Link>
-
-            <Link
-              to="/login"
-              className="btn btn-outline-light btn-lg"
-            >
-              Login
-            </Link>
-          </div>
-
-        </div>
-      </div>
+      <Link
+        to="/login"
+        className="btn btn-outline-light btn-lg"
+      >
+        Login
+      </Link>
+    </div>
+  </div>
+</div>
 
       {/* Features */}
       <div className="container py-5">
